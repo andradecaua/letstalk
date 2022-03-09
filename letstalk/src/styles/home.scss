@@ -1,0 +1,47 @@
+#home{
+
+    display: grid;
+    min-height: 625px;
+    height: auto;
+
+    #text{
+
+        align-self: center;
+        color: rgb(241,241,241);
+        display: grid;
+        justify-self: center;
+        row-gap: 10px;
+        width: 100%;
+
+        #titletext{
+
+            font-size: 55px;
+            justify-self: center;            
+            transition-delay: 0.5s;
+            transition-duration: 1.5s;
+            transition-property: color;
+            transition-timing-function: linear;
+            word-spacing: 5px;
+
+            &:hover{
+
+                color: #8257e5;
+                
+            }
+        }
+
+        span{
+            font-weight: bold;
+            justify-self: center;
+        }
+
+    }
+
+    #homebuttons{
+
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+        
+    }
+}
