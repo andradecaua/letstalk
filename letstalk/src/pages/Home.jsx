@@ -1,10 +1,10 @@
 import React from 'react'
 
-import { Button } from '../componentes/Button'
+import { ButtonLink } from '../componentes/ButtonLink'
 
 import '../styles/home.scss'
 
-export function HomePage(){
+export function HomePage(){ // Página inicial do app
 
     return(
 
@@ -16,10 +16,10 @@ export function HomePage(){
                 <span id="smalltext2">Crie sua conta agora, ou entre para continuar conversando em seus canais</span>
             </div>
 
-            <div id="homebuttons">
+            <div id="homebuttons" /* Botões para redirecionar a pessoa para a página de login ou registro */ >
 
-                <Button link="/cadastrar" text="Cadastre-se"/>
-                <Button link="/login" text="Entrar"/>
+                <ButtonLink link="/cadastrar" text="Cadastre-se"/>
+                <ButtonLink link="/login" text="Entrar"/>
 
             </div>
 

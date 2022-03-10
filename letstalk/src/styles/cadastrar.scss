@@ -1,0 +1,78 @@
+#cadastrarpage{
+
+    color: rgb(241, 241, 241);
+    display: grid;
+    min-height: 625px;
+    grid-template-rows: 30% 70%;
+
+    #text{
+        align-self: flex-end;
+        display: grid;
+        justify-self: center;
+        margin-bottom: 15px;
+        h2{
+            font-size: 45px;
+            justify-self: center;
+            margin: 0px;
+        }
+        span{
+            justify-self: center;
+            margin-left: 50px;
+        }
+    }
+
+    #createAccountForm{
+        display: grid;
+        grid-row: 2;
+        grid-template-rows: 25px 45px 25px 45px 25px 45px 25px 45px 25px 45px 20px 50px;
+        height: 430px;
+        justify-self: center;
+        width: 350px;
+
+        .registerInputs{
+            align-self: center;
+            background-color: #313131;
+            border: 1px solid #313131;
+            border-radius: 5px;
+            color: rgb(241, 241, 241);
+            height: 30px;
+            justify-self: center;
+            outline: none;
+            transition: border 0.1s linear 0.05s, color 0.1s linear 0.05s;
+            width: 300px;
+            &:focus{
+                border: 1px solid #8257e5;
+                color: #8257e5;
+            }
+        }
+
+        .registerLabels{
+            align-self: flex-end;
+            margin-left: 25px;
+        }
+
+        a{
+            color: #551a8b;
+            justify-self: flex-end;
+            margin-right: 25px;
+            text-decoration: none;
+        }
+        .criarContaButton{
+            align-self: center;
+            background-color: #8257e5;
+            border-radius: 3px;
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 15px;
+            height: 40px;
+            justify-self: center;
+            width: 320px;
+            transition: filter 0.2s linear 0.1s;
+
+            &:hover{
+                filter: brightness(0.8)
+            }
+        }
+    }
+}
