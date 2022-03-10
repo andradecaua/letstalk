@@ -1,9 +1,17 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 
-export function HomeCliente(){
+import {connect} from 'react-redux'
+
+import {auth} from '../services/firebaseconfig'
+
+function HomeCliente({user}){
+
     return(
         <div>
             Home Cliente
         </div>
     )
+    
 }
+
+export default connect(state => ({user: state})) (HomeCliente)

@@ -15,7 +15,25 @@ import '../styles/cadastrar.scss'
 
 function CadastrarPage({user, dispatch}){ //Página para cadastrar a pessoa
 
+    async function handleCreateUser(){ // Função para registrar o usuário
+        
+        const usuario =  await auth.createUserWithEmailAndPassword(user.Email, user.Password).then((userdata) => { // Função do firebase para criar o usuário utilizando email e senha
+            try{ // Pegando caso der erro na criação do usuário
+                if(userdata){
 
+                    userdata.user.updateProfile({ // Atualizando o perfil do usuário com o nome 
+                        displayName: `${user.Nome} ${user.Sobrenome}`
+                    }).then(() => { // Deslogando o usuário e resetando o usuário no redux
+
+                        auth.signOut()
+
+                        dispatch(createUser.resetUser(''))
+                    })
+                }
+            }catch(e){
+            }
+        })       
+    }
 
     return(
 
@@ -34,11 +52,11 @@ function CadastrarPage({user, dispatch}){ //Página para cadastrar a pessoa
 
                 }}/>
 
-                <span className='registerLabels' >Usuário</span>
-                <input id='user.input' type="text" className="registerInputs" placeholder='Ex: jaozinho.123' onChange={() => {
+                <span className='registerLabels' >Sobrenome</span>
+                <input id='user.sobrenome' type="text" className="registerInputs" placeholder='Ex: Souza' onChange={() => {
 
-                    const usuario = document.getElementById('user.input').value
-                    dispatch(createUser.createUser(usuario))
+                    const sobrenome = document.getElementById('user.sobrenome').value
+                    dispatch(createUser.createSobrenome(sobrenome))
 
                 }}/>
 
@@ -61,14 +79,13 @@ function CadastrarPage({user, dispatch}){ //Página para cadastrar a pessoa
                      if(pass1 !== pass2 || pass2 === ""){
                            return
                      }else{
-                        console.log(pass1)
                         dispatch(createUser.createPassword(pass1))
                       }
                       
                 }} />
 
                 <Link to="/login">Já possui uma conta?</Link>
-                <ButtonRegisLogin func={() => {console.log(user)}} class="criarContaButton" text="Criar conta" /* Componente utilizado para criar a conta */ /> 
+                <ButtonRegisLogin func={handleCreateUser} class="criarContaButton" text="Criar conta" /* Componente utilizado para criar a conta */ /> 
             </div>
 
         </div>
