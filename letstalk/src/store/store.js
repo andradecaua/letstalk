@@ -1,5 +1,7 @@
 import {createStore} from 'redux'
 
+import {auth} from '../services/firebaseconfig'
+
 let initialValue =  { // Estado inicial do usuário no redux
    User: {
       Nome: '',
@@ -7,11 +9,13 @@ let initialValue =  { // Estado inicial do usuário no redux
       Email: '',
       Password: '',
       Uid: '',
+      Canais: [],
    }
 };
 
 
 function reducer(state = initialValue.User, action){ // Condições para as actions do redux
+
   if(action.type === 'CREATE_NOME'){
     return{...state, Nome: action.nome}
   }
@@ -28,7 +32,8 @@ function reducer(state = initialValue.User, action){ // Condições para as acti
     return {...state, Nome: action.reset, User: action.reset, Password: action.reset, Email: action.reset}
   }
   if(action.type === "USUARIO_LOGIN"){
-    return {...state, Nome: action.usuario.nome, Email: action.usuario.email, Uid: action.usuario.uid}
+
+    return {...state, Nome: action.usuario.nome, Email: action.usuario.email, Uid: action.usuario.uid, Canais: action.usuario.canal}
   }
   return state
 

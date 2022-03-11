@@ -4,7 +4,9 @@ import { ButtonLink } from '../componentes/ButtonLink'
 
 import '../styles/home.scss'
 
+
 export function HomePage(){ // Página inicial do app
+
 
     return(
 
