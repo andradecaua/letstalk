@@ -1,26 +1,25 @@
 import React from 'react'
 
-import {ButtonRegisLogin} from '../componentes/ButtonRegisterLogin'
+import { ButtonRegisLogin } from '../componentes/ButtonRegisterLogin'
 
-import {connect} from 'react-redux'
+import { connect } from 'react-redux'
 
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
-import {auth} from '../services/firebaseconfig'
+import { auth } from '../services/firebaseconfig'
 
 import * as createUser from '../store/actions/actions'
 
 import '../styles/cadastrar.scss'
 
 
-function CadastrarPage({user, dispatch}){ //Página para cadastrar a pessoa
+function CadastrarPage({ user, dispatch }) { //Página para cadastrar a pessoa
 
-    async function handleCreateUser(){ // Função para registrar o usuário
-        
-        const usuario =  await auth.createUserWithEmailAndPassword(user.Email, user.Password).then((userdata) => { // Função do firebase para criar o usuário utilizando email e senha
-            try{ // Pegando caso der erro na criação do usuário
-                if(userdata){
+    async function handleCreateUser() { // Função para registrar o usuário
 
+        const usuario = await auth.createUserWithEmailAndPassword(user.Email, user.Password).then((userdata) => { // Função do firebase para criar o usuário utilizando email e senha
+            try { // Pegando caso der erro na criação do usuário
+                if (userdata) {
                     userdata.user.updateProfile({ // Atualizando o perfil do usuário com o nome 
                         displayName: `${user.Nome} ${user.Sobrenome}`
                     }).then(() => { // Deslogando o usuário e resetando o usuário no redux
@@ -30,12 +29,12 @@ function CadastrarPage({user, dispatch}){ //Página para cadastrar a pessoa
                         dispatch(createUser.resetUser(''))
                     })
                 }
-            }catch(e){
+            } catch (e) {
             }
-        })       
+        })
     }
 
-    return(
+    return (
 
         <div id="cadastrarpage">
             <div id="text">
@@ -50,7 +49,7 @@ function CadastrarPage({user, dispatch}){ //Página para cadastrar a pessoa
                     const nome = document.getElementById('nome.input').value
                     dispatch(createUser.createNome(nome))
 
-                }}/>
+                }} />
 
                 <span className='registerLabels' >Sobrenome</span>
                 <input id='user.sobrenome' type="text" className="registerInputs" placeholder='Ex: Souza' onChange={() => {
@@ -58,7 +57,7 @@ function CadastrarPage({user, dispatch}){ //Página para cadastrar a pessoa
                     const sobrenome = document.getElementById('user.sobrenome').value
                     dispatch(createUser.createSobrenome(sobrenome))
 
-                }}/>
+                }} />
 
                 <span className='registerLabels'>Email</span>
                 <input id="email.input" type="email" className="registerInputs" placeholder='Ex: jaozinho123@gmail.com' onChange={() => {
@@ -66,30 +65,30 @@ function CadastrarPage({user, dispatch}){ //Página para cadastrar a pessoa
                     const email = document.getElementById('email.input').value
                     dispatch(createUser.createEmail(email))
 
-                }}/>
+                }} />
 
                 <span className='registerLabels'>Senha</span>
-                <input id="password1" type="password" className="registerInputs"/>
+                <input id="password1" type="password" className="registerInputs" />
                 <span className='registerLabels'>Confirme sua senha</span>
                 <input id="password2" type="password" className="registerInputs" onChange={() => {
-                                        
+
                     const pass1 = document.getElementById('password1').value
                     const pass2 = document.getElementById('password2').value
-                    
-                     if(pass1 !== pass2 || pass2 === ""){
-                           return
-                     }else{
+
+                    if (pass1 !== pass2 || pass2 === "") {
+                        return
+                    } else {
                         dispatch(createUser.createPassword(pass1))
-                      }
-                      
+                    }
+
                 }} />
 
                 <Link to="/login">Já possui uma conta?</Link>
-                <ButtonRegisLogin func={handleCreateUser} class="criarContaButton" text="Criar conta" /* Componente utilizado para criar a conta */ /> 
+                <ButtonRegisLogin func={handleCreateUser} class="criarContaButton" text="Criar conta" /* Componente utilizado para criar a conta */ />
             </div>
 
         </div>
     )
 }
 
-export default connect(state => ({user: state}))(CadastrarPage)
+export default connect(state => ({ user: state }))(CadastrarPage)

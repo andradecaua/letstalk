@@ -44,3 +44,10 @@ export function setUserLogin(usuario){
     }
 }
 
+export function SetActiveChannel(chanel){
+    return{
+        type: 'ACTIVE_CHANEL',
+        chanel
+    }
+}
+
