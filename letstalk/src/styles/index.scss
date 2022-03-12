@@ -17,3 +17,103 @@ body{
     }
 
 }
+
+
+@media only screen and(max-width: 1000px){
+
+    #home{
+        
+        #text{
+            #smalltext1{
+                width: 90%;
+            }
+            #smalltext2{
+                width: 90%;
+            }
+        }
+
+        #homebuttons{
+            display: grid;
+        }
+    }
+
+    #cadastrarpage{
+        #text{
+            width: 100%;
+            h2{
+                font-size: 40px;
+            }
+            span{
+                justify-self: flex-start;
+                font-size: 15px;     
+            }
+        }
+    }
+
+    #login{
+        h2{
+            font-size: 30px;
+        }
+    }
+
+    #homecliente{
+
+        grid-template-columns: 100%;
+        height: max-content;
+        row-gap: 20px;
+        #userProfile{
+            grid-row: 1;
+            grid-template-rows: 40px 200px 200px 200px;
+            #user{
+                height: 40px;
+            }
+            #createchannel{
+                overflow: none;
+                border-bottom: 1px solid #8257e5;
+            }
+        }
+
+        #chat{
+            grid-row: 2;
+            grid-column: 1;
+            row-gap: 15%;
+            #showmensagem{
+                border: 1px solid #8257e5;
+                justify-self: center;
+                width: 80%;
+            }
+
+            #sendmensagemarea{
+                display: grid;
+                grid-template-columns: 100%;
+
+                #writemensage{
+                    margin: 0px;
+                }
+
+                #enviarmensagem{
+                    width: 50%;
+                    margin: 0px;
+                }
+            }   
+        }
+    }
+}
+
+@media only screen and(min-height: 1080px){
+    #homecliente{
+        
+        min-height: 100%;
+
+        #userProfile{
+           min-height: 1080px; 
+        }
+
+        #chat{
+
+            #showmensagem{
+                min-height: 100%;
+            }
+        }
+    }
+}

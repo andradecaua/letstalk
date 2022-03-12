@@ -18,7 +18,6 @@ function HomeCliente({ user, dispatch }) {
 
     useEffect(() => { // Mantém o estado de autenticado da pessoa
 
-
         auth.onAuthStateChanged(async (usuario) => { //Função para manter o estado de autenticação e pegar os canais do usuário
 
 
@@ -35,12 +34,12 @@ function HomeCliente({ user, dispatch }) {
 
                         try {
 
-                            for(let i in canaisG[index].Users){
+                            for(let i in canaisG[index].Users){ // Dando push na lista de canais do usuário
 
                                 if(canaisG[index].Users[i] === usuario.uid){
-
+                                    
                                     canais.push(canaisG[index].Name)
-
+                                    
                                 }
 
                             }
@@ -53,7 +52,7 @@ function HomeCliente({ user, dispatch }) {
 
                     return canais
 
-                }).then((canais) => {
+                }).then((canais) => { // Define os canais do usuário
                     
                     if (canais === undefined) {
                         
@@ -70,6 +69,7 @@ function HomeCliente({ user, dispatch }) {
                 navigate('/')
             }
         })
+
     }, [])
 
 
@@ -84,7 +84,7 @@ function HomeCliente({ user, dispatch }) {
             const exists = db.get().then((data) => { //Promise para fazer a verificação se o canal já existe ou não
 
                 if (data.val()[name] !== undefined) { // Retorna um erro caso o canal já exista
-                    return console.log('Esse canal já existe') // Inserção visual
+                    return alert('Esse canal já existe') // Inserção visual
                 }
                 else { // Cria o canal caso ele não existe
 
@@ -98,6 +98,7 @@ function HomeCliente({ user, dispatch }) {
 
                             db.child(`${name}`).set({
                                 Name: name,
+                                criador: user.Uid,
                                 Senha: pass,
                                 Private: true,
                                 Users: null,
@@ -106,7 +107,7 @@ function HomeCliente({ user, dispatch }) {
                             db.child(`${name}`).child(`Users`).push(user.Uid).then(atualizar)
 
                         } else {
-                            return console.log("Digite uma senha!") // Inserção visual
+                            return alert("Digite uma senha!") // Inserção visual
                         }
 
                     } else { // Cria o canal caso ele não for privado
@@ -116,6 +117,7 @@ function HomeCliente({ user, dispatch }) {
                             Senha: "",
                             Private: false,
                             Users: null,
+                            criador: user.Uid
                         })
 
                         db.child(`${name}`).child(`Users`).push(user.Uid).then(atualizar)
@@ -126,6 +128,38 @@ function HomeCliente({ user, dispatch }) {
             })
 
         }
+
+    }
+
+    async function handleDeleteChannel(){ //Função para deleter o canal do usuário
+
+        const pass = document.getElementById('passwordChannel').value
+        const name = document.getElementById('channelName').value
+
+        db.child(name).child('criador').get().then((data) => { //Verificando se o usuário foi o criador
+            if(data.val() === user.Uid){
+
+                db.child(name).child('Private').get().then((privado) => {
+
+                    if(privado.val() === true){
+
+                        db.child(name).child('Senha').get().then((senha) => {
+                            if(senha.val() === pass){
+        
+                                db.child(name).remove()
+                                window.location.reload()
+                            }
+                        })
+                    }else{
+                        db.child(name).remove()
+                        window.location.reload()
+                    }
+                })
+
+            }else{
+                alert('Você não é o criador deste canal!')
+            }
+        })
 
     }
 
@@ -144,7 +178,7 @@ function HomeCliente({ user, dispatch }) {
 
                         db.child(name).child('Users').push(user.Uid).then(atualizar)
                     }else{
-                        console.log("Senha errada!") // Inserção visual!
+                        alert("Senha errada!") // Inserção visual!
                     }
 
                 })
@@ -164,8 +198,31 @@ function HomeCliente({ user, dispatch }) {
     }
 
     async function atualizar(name){
-        setTimeout(window.location.reload(), 1000)//Inserção Visual
+        setTimeout(window.location.reload(), 1000)
     }
+
+
+    async function handleSendMensagem(){
+
+        const mensagem = document.getElementById('writemensage')
+
+        if(mensagem.value === ""){
+
+        }else{
+
+            db.child(user.ActiveChannel).child('Mensagem').push({ // Envia a mensagem para o banco de dados
+
+                Nome: user.Nome,
+                texto: mensagem.value
+    
+            })
+
+        }
+
+        mensagem.value = ''
+
+    }
+
 
     return (
         <div id="homecliente">
@@ -179,7 +236,6 @@ function HomeCliente({ user, dispatch }) {
 
                 <div id="userchannels">
                     {user.Canais.map((value, index) => {
-
                         return (
                             <div className='channels' key={index} onClick={() => {dispatch(SetActiveChannel(user.Canais[index]))}}>
                                 <span>{user.Canais[index]}</span>
@@ -211,6 +267,7 @@ function HomeCliente({ user, dispatch }) {
                     <input id="privateChannel" type="checkbox" value={true} />
 
                     <button id="createChannelButton" onClick={createChannel}>Criar canal</button>
+                    <button id="deleteChannel" onClick={handleDeleteChannel}>Deletar Canal</button>
 
                 </div>
 
@@ -218,13 +275,13 @@ function HomeCliente({ user, dispatch }) {
 
             <div id="chat">
 
-                <div id="channelarea">
+                <div id="showmensagem">
 
                 </div>
 
                 <div id="sendmensagemarea">
                     <textarea id="writemensage" />
-                    <button id="enviarmensagem"></button>
+                    <button onClick={handleSendMensagem} id="enviarmensagem">Enviar</button>
                 </div>
 
             </div>

@@ -34,6 +34,17 @@ function LoginPage({ user, dispatch }) { //Página de login do usuário
             } catch(e){
 
             }
+        }).catch((e) => {
+
+            const arealogin = document.getElementById('loginForm')
+            arealogin.innerHTML += '<div id="erro" >Sua senha ou email não conferem!</div>'
+
+            setTimeout(() => {
+                const erro = document.getElementById('erro')
+                erro.remove()
+                window.location.reload()
+            }, 3000)
+
         })
 
     }

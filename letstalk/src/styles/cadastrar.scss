@@ -24,7 +24,7 @@
     #createAccountForm{
         display: grid;
         grid-row: 2;
-        grid-template-rows: 25px 45px 25px 45px 25px 45px 25px 45px 25px 45px 20px 50px;
+        grid-template-rows: 25px 45px 25px 45px 25px 45px 25px 45px 25px 45px 20px 50px auto;
         height: 430px;
         justify-self: center;
         width: 350px;
@@ -73,6 +73,10 @@
             &:hover{
                 filter: brightness(0.8)
             }
+        }
+        #erro{
+            justify-self: center;
+            font-weight: bold;
         }
     }
 }

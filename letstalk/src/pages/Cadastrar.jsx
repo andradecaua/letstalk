@@ -31,9 +31,27 @@ function CadastrarPage({ user, dispatch }) { //Página para cadastrar a pessoa
                 }
             } catch (e) {
             }
+        }).catch((e) => {
+            if(user.Password === ""){
+                showError('Por favor digite uma senha!')
+            }
+            else{
+                showError("Email já utilizado, por favor utilize outro!")
+            }
         })
     }
+    function showError(text){
 
+        const area = document.getElementById('createAccountForm')
+        area.innerHTML += `<div id="erro">${text}</div>`
+
+        setTimeout(() => {
+            const erro = document.getElementById('erro')
+            erro.remove()
+            window.location.reload()
+        }, 1500)
+
+    }
     return (
 
         <div id="cadastrarpage">
