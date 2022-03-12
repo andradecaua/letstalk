@@ -25,9 +25,11 @@ body{
         
         #text{
             #smalltext1{
+                justify-self: center;
                 width: 90%;
             }
             #smalltext2{
+                justify-self: center;
                 width: 90%;
             }
         }
@@ -68,7 +70,7 @@ body{
                 height: 40px;
             }
             #createchannel{
-                overflow: none;
+                overflow: unset;
                 border-bottom: 1px solid #8257e5;
             }
         }
@@ -100,13 +102,26 @@ body{
     }
 }
 
-@media only screen and(min-height: 1080px){
+@media only screen and(min-height: 951px){
+    #home{
+        min-height: 961px;
+    }
+
+    #cadastrarpage{
+        min-height: 961px;
+    }
+
+    #login{
+        min-height: 961px;
+        grid-template-rows: 30% 70%;
+    }   
+
     #homecliente{
         
-        min-height: 100%;
+        min-height: 961px;
 
         #userProfile{
-           min-height: 1080px; 
+           min-height: 961; 
         }
 
         #chat{
