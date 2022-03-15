@@ -49,7 +49,7 @@ function CadastrarPage({ user, dispatch }) { //Página para cadastrar a pessoa
             const erro = document.getElementById('erro')
             erro.remove()
             window.location.reload()
-        }, 1500)
+        }, 1000)
 
     }
     return (

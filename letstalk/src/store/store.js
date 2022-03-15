@@ -59,7 +59,8 @@ function reducer(state = initialValue.User, action) { // Condições para as act
               <span class="nome">${Nome}</span>
               <span class="mensagem" >${texto}</span>
             </div>` 
-            area.scrollTo(0, 600)
+        
+            area.scrollTo(0, area.scrollHeight)
         }
 
     })

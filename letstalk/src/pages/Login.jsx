@@ -43,7 +43,7 @@ function LoginPage({ user, dispatch }) { //Página de login do usuário
                 const erro = document.getElementById('erro')
                 erro.remove()
                 window.location.reload()
-            }, 3000)
+            }, 1000)
 
         })
 
