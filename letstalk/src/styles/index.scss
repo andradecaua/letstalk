@@ -19,7 +19,7 @@ body{
 }
 
 
-@media only screen and(max-width: 1000px){
+@media screen and(max-width: 1000px){
 
     #home{
         
@@ -45,12 +45,15 @@ body{
 
     #cadastrarpage{
         #text{
-            width: 100%;
+            width: 100vw;
             h2{
                 font-size: 40px;
             }
             span{
-                justify-self: flex-start;
+                width: 100vw;
+                margin: 0px;
+                text-align: center;
+                justify-self: center;
                 font-size: 15px;     
             }
         }
@@ -106,19 +109,19 @@ body{
     }
 }
 
-@media only screen and(min-height: 951px){
+@media screen and(min-height: 951px){
     #home{
-        min-height: 961px;
+        min-height: 100vh;
         height: auto;
     }
 
     #cadastrarpage{
-        min-height: 961px;
+        min-height: 100vh;
         height: auto;
     }
 
     #login{
-        min-height: 961px;
+        min-height: 100vh;
         grid-template-rows: 30% 70%;
         h2{
             font-size: 60px;
@@ -127,7 +130,7 @@ body{
 
     #homecliente{
         
-        min-height: 961px;
+        min-height: 100vh;
 
         #userProfile{
            min-height: 961; 
@@ -137,6 +140,19 @@ body{
 
             #showmensagem{
                 min-height: 100%;
+            }
+        }
+    }
+}
+
+@media screen and (max-height: 736px){
+    #homecliente{
+        height: 100vh;
+
+        #userprofile{
+            
+            #createchannel{
+                overflow: auto;
             }
         }
     }
