@@ -2,6 +2,7 @@
 
     display: grid;
     grid-template-columns: 25% 75%;
+    height: auto;
     min-height: 625px;
 
 
@@ -10,21 +11,27 @@
         display: grid;
         grid-column: 2;
         grid-template-rows: 80% 20%;
+        height: auto;
 
         #showmensagem{
 
             background-color: #313131;
             display: grid;
             grid-template-columns: 100%;
-            grid-auto-rows: 60px;
-            height: 500px;
+            row-gap: 5px;
+            grid-auto-rows: auto;
+            min-height: 500px;
+            height: auto;
             max-height: 500px;
             overflow: auto;
 
             .mensagens{
 
                 display: grid;
+                height: max-content;
                 margin-left: 10px;
+                grid-template-rows: 15px auto;
+                row-gap: 2px;
 
                 .nome{
                     align-self: flex-end;
@@ -38,6 +45,9 @@
                     color: rgb(241, 241 , 241);
                     grid-row: 2;
                     word-break: break-all;
+                    min-height: 40px;
+                    height: auto;
+                    max-height: max-content;
                 }
             }
         }
