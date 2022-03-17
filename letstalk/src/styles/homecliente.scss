@@ -19,7 +19,7 @@
             display: grid;
             grid-template-columns: 100%;
             row-gap: 5px;
-            grid-auto-rows: auto;
+            grid-auto-rows: max-content;
             min-height: 500px;
             height: auto;
             max-height: 500px;
