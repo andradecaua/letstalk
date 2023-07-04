@@ -12,41 +12,43 @@ import { auth } from '../services/firebaseconfig'
 
 
 import "../styles/login.scss"
+import { useReducer } from 'react'
 
 function LoginPage({ user, dispatch }) { //Página de login do usuário
 
     const navigate = useNavigate()
+    const [state, dispatchLocalReducer] = useReducer(reducer, {email: "", senha: ""})
+
+    function reducer(state, action){
+        switch(action.type){
+            case "senha":
+                return {
+                    ...state,
+                    senha: action.payload 
+                }
+            case "email": 
+                return {
+                    ...state,
+                    email: action.payload 
+                }
+            default: return state 
+        }
+    }
 
     async function handleLogin() { // Função para realizar o login do usuário
-
-        const userlogin = document.getElementsByClassName('logininputs')
-
-        await auth.signInWithEmailAndPassword(userlogin[0].value, userlogin[1].value).then((userdata) => { // Função que aguarda os dados do usuário para login
-
-            try {
-
-                if (userdata) {
-
-                    auth.setPersistence('session')
-                    dispatch(setUserLogin({ nome: userdata.user.displayName, email: userdata.user.email, uid: userdata.user.uid, canal: [] })) //Após logar setamos os dados do usuário dentro do Redux
-                    navigate('/home')
-                }
-            } catch(e){
-
+        try{
+            const resultadoLogin = await auth.signInWithEmailAndPassword(state.email, state.senha)      
+            if(resultadoLogin.user.email === state.email){
+                const usuario = resultadoLogin.user 
+                await auth.setPersistence('session')
+                dispatch(setUserLogin({ nome: usuario.displayName, email: usuario.email, uid: usuario.uid, canal: [] })) //Após logar setamos os dados do usuário dentro do Redux
+                navigate('/home')
+            }else{
+                throw {code: "Ouve um erro ao fazer o login", resultadoLogin}
             }
-        }).catch((e) => {
-
-            const arealogin = document.getElementById('loginForm')
-            arealogin.innerHTML += '<div id="erro" >Sua senha ou email não conferem!</div>'
-
-            setTimeout(() => {
-                const erro = document.getElementById('erro')
-                erro.remove()
-                window.location.reload()
-            }, 1000)
-
-        })
-
+        }catch(e){
+            return e.code 
+        }
     }
 
     return (
@@ -57,10 +59,10 @@ function LoginPage({ user, dispatch }) { //Página de login do usuário
             <div id="loginForm">
 
                 <span className='spaninput inputsconfig'>Usuário</span>
-                <input type="text" className='logininputs inputsconfig' placeholder='Email' />
+                <input type="text" className='logininputs inputsconfig' placeholder='Email' onChange={(event) => {dispatchLocalReducer({action: "email", payload: event.currentTarget.value})}} />
 
-                <span className='spaninput inputsconfig'>Senha</span>
-                <input type="password" className='logininputs inputsconfig' />
+                <span className='spaninput inputsconfig'  >Senha</span>
+                <input type="password" className='logininputs inputsconfig' onChange={(event) => {dispatchLocalReducer({action: "email", payload: event.currentTarget.value})}} />
 
                 <ButtonRegisLogin func={handleLogin} class="buttonLogin" text="Entrar" /* Componente utilizado para se logar*/ />
                 <Link to="/cadastrar">Ainda não possui conta?</Link>

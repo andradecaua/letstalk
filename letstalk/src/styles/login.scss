@@ -4,7 +4,8 @@
     display: grid;
     grid-template-rows: 30% 70%;
     min-height: 625px;
-    
+    height: 100vh;
+
     h2{
         align-self: flex-end;
         font-size: 40px;
@@ -50,6 +51,7 @@
         .buttonLogin{
 
             align-self: center;
+            border: 1px solid #8257e5;
             background-color: #8257e5;
             border-radius: 3px;
             color: rgb(241,241,241);

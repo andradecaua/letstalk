@@ -13,7 +13,7 @@ export function HomePage(){ // Página inicial do app
         <div id="home">
 
             <div id="text">
-                <h2 id="titletext">Let's Talk ?</h2>
+                <h2 id="titletext">Talk Channel</h2>
                 <span id="smalltext1">Converse com pessoas de todos os lugares</span>
                 <span id="smalltext2">Crie sua conta agora, ou entre para continuar conversando em seus canais</span>
             </div>

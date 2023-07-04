@@ -1,4 +1,4 @@
-import React from 'react'
+import {React, useState} from 'react'
 
 import { ButtonRegisLogin } from '../componentes/ButtonRegisterLogin'
 
@@ -12,46 +12,38 @@ import * as createUser from '../store/actions/actions'
 
 import '../styles/cadastrar.scss'
 
-
 function CadastrarPage({ user, dispatch }) { //Página para cadastrar a pessoa
+
+    const [resultado, setResultado] = useState("")
 
     async function handleCreateUser() { // Função para registrar o usuário
 
-        const usuario = await auth.createUserWithEmailAndPassword(user.Email, user.Password).then((userdata) => { // Função do firebase para criar o usuário utilizando email e senha
-            try { // Pegando caso der erro na criação do usuário
-                if (userdata) {
-                    userdata.user.updateProfile({ // Atualizando o perfil do usuário com o nome 
+        try{
+            const usuario = await auth.createUserWithEmailAndPassword(user.Email, user.Password) // Função do firebase para criar o usuário utilizando email e senha
+            if(usuario.user.email === user.Email){
+                await usuario.user.updateProfile( // Atualizando o perfil do usuário com o nome 
+                    {
                         displayName: `${user.Nome} ${user.Sobrenome}`
-                    }).then(() => { // Deslogando o usuário e resetando o usuário no redux
-
-                        auth.signOut()
-
-                        dispatch(createUser.resetUser(''))
-                    })
-                }
-            } catch (e) {
+                    }
+                )
+                await auth.signOut() // Deslogando o usuário e resetando o usuário no redux
+                dispatch(createUser.resetUser(''))
+                return {code: "Usuário criado com sucesso!"}
+            }else{
+                throw {message: "Ouve um erro ao criar o usuário", usuario, code: "Ouve um erro ao criar o usuario"}
             }
-        }).catch((e) => {
-            if(user.Password === ""){
-                showError('Por favor digite uma senha!')
-            }
-            else{
-                showError("Email já utilizado, por favor utilize outro!")
-            }
-        })
+        }catch(e){
+           return e
+        }
     }
-    function showError(text){
 
-        const area = document.getElementById('createAccountForm')
-        area.innerHTML += `<div id="erro">${text}</div>`
-
+    function showResultado(resultado){
+        setResultado(resultado)
         setTimeout(() => {
-            const erro = document.getElementById('erro')
-            erro.remove()
-            window.location.reload()
-        }, 1000)
-
+            setResultado("")
+        }, 3000)
     }
+
     return (
 
         <div id="cadastrarpage">
@@ -102,7 +94,13 @@ function CadastrarPage({ user, dispatch }) { //Página para cadastrar a pessoa
                 }} />
 
                 <Link to="/login">Já possui uma conta?</Link>
-                <ButtonRegisLogin func={handleCreateUser} class="criarContaButton" text="Criar conta" /* Componente utilizado para criar a conta */ />
+                <ButtonRegisLogin func={async () => {
+                    const resultCreateUser = await handleCreateUser()
+                    showResultado(resultCreateUser.code)
+                }} class="criarContaButton" text="Criar conta" /* Componente utilizado para criar a conta */ />
+                <span>
+                    {resultado}
+                </span>
             </div>
 
         </div>

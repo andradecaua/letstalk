@@ -1,15 +1,17 @@
 #home{
 
-    display: grid;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
     min-height: 625px;
-    height: auto;
+    height: 100vh;
+    justify-content: center;
+    gap: 50px;
 
     #text{
 
-        align-self: center;
         color: rgb(241,241,241);
         display: grid;
-        justify-self: center;
         row-gap: 10px;
         width: 100%;
 
