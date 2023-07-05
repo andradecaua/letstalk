@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 
 import { Link, useNavigate } from 'react-router-dom'
 
@@ -18,6 +18,7 @@ function LoginPage({ user, dispatch }) { //Página de login do usuário
 
     const navigate = useNavigate()
     const [state, dispatchLocalReducer] = useReducer(reducer, {email: "", senha: ""})
+    const [erroLogin, setErroLogin] = useState("")
 
     function reducer(state, action){
         switch(action.type){
@@ -43,11 +44,12 @@ function LoginPage({ user, dispatch }) { //Página de login do usuário
                 await auth.setPersistence('session')
                 dispatch(setUserLogin({ nome: usuario.displayName, email: usuario.email, uid: usuario.uid, canal: [] })) //Após logar setamos os dados do usuário dentro do Redux
                 navigate('/home')
+                console.log('hello')
             }else{
                 throw {code: "Ouve um erro ao fazer o login", resultadoLogin}
             }
         }catch(e){
-            return e.code 
+            return e
         }
     }
 
@@ -59,14 +61,17 @@ function LoginPage({ user, dispatch }) { //Página de login do usuário
             <div id="loginForm">
 
                 <span className='spaninput inputsconfig'>Usuário</span>
-                <input type="text" className='logininputs inputsconfig' placeholder='Email' onChange={(event) => {dispatchLocalReducer({action: "email", payload: event.currentTarget.value})}} />
+                <input type="text" className='logininputs inputsconfig' placeholder='Email' onChange={(event) => {dispatchLocalReducer({type: "email", payload: event.currentTarget.value})}} />
 
                 <span className='spaninput inputsconfig'  >Senha</span>
-                <input type="password" className='logininputs inputsconfig' onChange={(event) => {dispatchLocalReducer({action: "email", payload: event.currentTarget.value})}} />
+                <input type="password" className='logininputs inputsconfig' onChange={(event) => {dispatchLocalReducer({type: "senha", payload: event.currentTarget.value})}} />
 
-                <ButtonRegisLogin func={handleLogin} class="buttonLogin" text="Entrar" /* Componente utilizado para se logar*/ />
+                <ButtonRegisLogin func={async () => {
+                        const resultLogin = await handleLogin()
+                        setErroLogin(resultLogin.code)
+                }} class="buttonLogin" text="Entrar" /* Componente utilizado para se logar*/ />
                 <Link to="/cadastrar">Ainda não possui conta?</Link>
-
+                <span>{erroLogin}</span>
             </div>
 
         </div>
